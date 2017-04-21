@@ -9,10 +9,8 @@ MAINTAINER Herb Lainchbury <herb@dynamic-solutions.com>
 
 # install os packages
 RUN apt-get update
-RUN apt-get -y install \
-    git \
-    wget \
-    python3-pip
+RUN apt-get -y install git
+RUN apt-get -y install python3-pip
 
 # setup MariaDB
 RUN apt-get install -y software-properties-common
