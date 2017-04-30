@@ -24,16 +24,8 @@ RUN apt-get -y -q install mariadb-server
 # update pip3
 RUN pip3 install --upgrade pip
 
-# install zoom
-RUN cd /tmp && git clone https://github.com/dsilabs/zoom.git
-RUN cd /tmp && pip3 install -r zoom/requirements.txt
-
-# upload scripts
-ADD setup.sh /tmp/setup.sh
+# configure and start the server
 ADD start.sh /tmp/start.sh
-
-# run the final setup
-RUN /bin/bash /tmp/setup.sh
 
 # run the server
 EXPOSE 8080
