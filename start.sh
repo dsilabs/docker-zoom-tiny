@@ -2,12 +2,12 @@
 
 echo Setting up
 
-# install zoom
+# install latest zoom
 cd /tmp \
   && git clone https://github.com/dsilabs/zoom.git \
   && pip3 install -r zoom/requirements.txt \
   && echo /tmp/zoom > zoom.pth \
-  && mv zoom.pth /usr/local/lib/python3.5/dist-packages
+  && mv zoom.pth /usr/local/lib/python3.6/dist-packages
 
 # setup the zoom config file
 echo -e "[database]\\ndbname=zoomdata\\ndbuser=root\\ndbpass=root" > /tmp/zoom/web/sites/localhost/site.ini
