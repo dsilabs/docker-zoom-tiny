@@ -5,7 +5,7 @@ echo Setting up
 # install latest zoom
 cd /tmp \
   && git clone https://github.com/dsilabs/zoom.git \
-  && pip3 install -r zoom/requirements.txt \
+  && pip3.6 install -r zoom/requirements.txt \
   && echo /tmp/zoom > zoom.pth \
   && mv zoom.pth /usr/local/lib/python3.6/dist-packages
 
