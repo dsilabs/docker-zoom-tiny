@@ -2,7 +2,7 @@
 Zoom Tiny
 =========
 
-A self-contained instance of Zoom suitable for playing around.
+A self-contained instance of [Zoom](https://github.com/dsilabs/zoom) suitable for playing around.
 
 
 usage:
