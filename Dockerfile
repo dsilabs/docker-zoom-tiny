@@ -39,5 +39,5 @@ RUN pip3 install --upgrade pip
 ADD start.sh /tmp/start.sh
 
 # run the server
-EXPOSE 8080
+EXPOSE 80
 CMD ["/bin/bash", "/tmp/start.sh"]

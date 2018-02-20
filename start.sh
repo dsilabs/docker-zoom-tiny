@@ -19,4 +19,4 @@ echo "create database zoomdata" | mysql -u root -proot
 mysql -u root -proot zoomdata < /tmp/zoom/tools/zoom/sql/setup_mysql.sql
 
 # run server
-cd /tmp/zoom && tools/zoom/zoom server -vp 8080
+cd /tmp/zoom && bin/zoom3.6 server web
