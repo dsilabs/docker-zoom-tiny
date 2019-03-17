@@ -2,7 +2,8 @@
 # dockerfile for zoom framework
 #
 
-FROM dsilabs/zoom:latest
+
+FROM dsilabs/zoom-nginx:latest
 
 MAINTAINER Herb Lainchbury <herb@dynamic-solutions.com>
 
