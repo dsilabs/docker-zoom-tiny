@@ -1,5 +1,5 @@
 #
-# dockerfile for zoom framework
+# Dockerfile standalone Zoom instance
 #
 
 
