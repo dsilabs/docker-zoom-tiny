@@ -3,7 +3,7 @@
 #
 
 
-FROM dsilabs/zoom-nginx:latest
+FROM dsilabs/zoom:latest
 
 MAINTAINER Herb Lainchbury <herb@dynamic-solutions.com>
 

@@ -10,4 +10,4 @@ python3.7 /work/libs/zoom/bin/zoom database -e mysql -u root -proot -d zoomdata 
 service nginx restart
 
 # run server
-uwsgi --ini uwsgi/uwsgi.ini
+uwsgi --ini /work/uwsgi/uwsgi.ini
