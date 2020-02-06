@@ -2,26 +2,26 @@
 image: docker:stable
 
 variables:
-  LATEST_VER: dsilabs/zoom-tiny:latest
+  IMAGE_NAME: dsilabs/zoom-tiny:latest
 
 stages:
-  - Build Image
-  - Push to Docker Hub
+  - build
+  - publish
 
-docker build:
-  stage: Build Image
+build image:
+  stage: build
   script:
   - docker info
-  - docker build -t $LATEST_VER .
+  - docker build -t $IMAGE_NAME .
   tags:
   - shell
-  
-docker push:
-  stage: Push to Docker Hub
+
+publish image:
+  stage: publish
   only:
   - master
   script:
   - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
-  - docker push $LATEST_VER && docker image rm $LATEST_VER
+  - docker push $IMAGE_NAME && docker image rm $IMAGE_NAME
   tags:
   - shell
