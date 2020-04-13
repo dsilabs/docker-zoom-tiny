@@ -10,4 +10,4 @@ usage:
     $ docker build -t zoom-tiny .
     $ docker run -d -p 8080:80 --name zoom-tiny-dev zoom-tiny
 
-then go to http://locahost:8080 in your browser.
+then go to http://localhost:8080 in your browser.
