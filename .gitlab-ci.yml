@@ -7,6 +7,7 @@ variables:
 stages:
   - build
   - publish
+  - downstream
 
 build image:
   stage: build
@@ -25,3 +26,7 @@ publish image:
   - docker push $IMAGE_NAME && docker image rm $IMAGE_NAME
   tags:
   - shell
+
+downstream:
+  stage: downstream
+  trigger: dsilabs/zoom-cd
