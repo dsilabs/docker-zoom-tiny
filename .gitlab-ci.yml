@@ -13,7 +13,7 @@ build image:
   stage: build
   script:
   - docker info
-  - docker build -t $IMAGE_NAME .
+  - docker build --no-cache -t $IMAGE_NAME .
   tags:
   - shell
 
@@ -31,3 +31,5 @@ publish image:
 downstream:
   stage: downstream
   trigger: dsilabs/zoom-cd
+  only:
+  - master
