@@ -5,23 +5,15 @@ variables:
   IMAGE_NAME: dsilabs/zoom-tiny:latest
 
 stages:
-  - build
   - publish
   - downstream
-
-build image:
-  stage: build
-  script:
-  - docker info
-  - docker build --no-cache -t $IMAGE_NAME .
-  tags:
-  - shell
 
 publish image:
   stage: publish
   #only:
   #- master
   script:
+  - docker info
   - docker build --no-cache -t $IMAGE_NAME .
   - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
   - docker push $IMAGE_NAME && docker image rm $IMAGE_NAME
