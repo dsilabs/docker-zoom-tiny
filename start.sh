@@ -3,8 +3,21 @@
 service mysql start
 
 # create database and site
+mysql -e "create database zoomdata"
+mysql -e "create user zoomuser identified by 'zoompass'"
+mysql -e "grant all on *.* to zoomuser"
+mysql zoomdata < /work/libs/zoom/zoom/sql/setup_mysql.sql
 mkdir web/sites/localhost
-python3.7 /work/libs/zoom/bin/zoom database -e mysql -u root -proot -d zoomdata setup localhost
+cat <<EOT | tee "/work/web/sites/localhost/site.ini"
+[site]
+name=ZOOM
+
+[database]
+name=zoomdata
+user=zoomuser
+password=zoompass
+EOT
+
 
 # start proxy server
 service nginx restart
