@@ -9,7 +9,6 @@ WORKDIR /work
 
 # setup MariaDB
 RUN MYSQL_ROOT_PASSWORD=root apt-get install -y mariadb-server
-RUN mysql -e "alter user 'root'@'localhost' identified by 'root'"
 
 # configure and start the service
 ADD start.sh /tmp/start.sh
