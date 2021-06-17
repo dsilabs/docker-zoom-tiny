@@ -18,6 +18,7 @@ user=zoomuser
 password=zoompass
 EOT
 
+mysql -e "alter user 'root'@'localhost' identified by 'root'"
 
 # start proxy server
 service nginx restart
