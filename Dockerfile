@@ -8,7 +8,7 @@ RUN apt-get update
 WORKDIR /work
 
 # setup MariaDB
-RUN MYSQL_ROOT_PASSWORD=root apt-get install -y mariadb-server
+RUN apt-get install -qqy mariadb-server
 
 # configure and start the service
 ADD start.sh /tmp/start.sh
