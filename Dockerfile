@@ -2,17 +2,18 @@
 # Dockerfile standalone Zoom instance
 #
 
-FROM dsilabs/zoom:latest
+ARG BASE_TAG=latest
+FROM dsilabs/zoom:${BASE_TAG}
 
-RUN apt-get update
+RUN apt-get update -qq
 WORKDIR /work
 
-# setup MariaDB
+# Setup MariaDB
 RUN apt-get install -qqy mariadb-server
 
-# configure and start the service
+# Configure and start the service
 ADD start.sh /tmp/start.sh
 
-# run the server
+# Run the server
 EXPOSE 80
 CMD ["/bin/bash", "/tmp/start.sh"]
