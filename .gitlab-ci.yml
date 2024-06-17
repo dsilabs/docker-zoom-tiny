@@ -38,7 +38,7 @@ push images:
     - docker build --no-cache --build-arg BASE_TAG=3.9-latest -t ${TAG_VERSION_PREFIX}:3.9 .
     - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
     # - docker push ${TAG_VERSION_PREFIX}:3.7
-    # - docker push ${TAG_VERSION_PREFIX}:3.9
+    - docker push ${TAG_VERSION_PREFIX}:3.9
     - docker tag ${TAG_VERSION_PREFIX}:3.9 ${TAG_VERSION_PREFIX}:latest
     # - docker push ${TAG_VERSION_PREFIX}:latest
   tags:
