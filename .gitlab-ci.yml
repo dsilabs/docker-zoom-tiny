@@ -14,10 +14,10 @@ publish image:
     - docker info
     - docker pull dsilabs/zoom:latest
     - docker build --no-cache -t $IMAGE_NAME .
-    # - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
-    # - docker push $IMAGE_NAME && docker image rm $IMAGE_NAME
-  # only:
-    # - master
+    - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
+    - docker push $IMAGE_NAME && docker image rm $IMAGE_NAME
+  only:
+    - master
   tags:
     - shell
 
@@ -29,10 +29,10 @@ publish MySQL 8 image:
     - docker info
     - docker pull dsilabs/zoom:latest
     - docker build --no-cache -f Dockerfile-MySQL8 -t $IMAGE_NAME .
-    # - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
-    # - docker push $IMAGE_NAME && docker image rm $IMAGE_NAME
-  # only:
-    # - master
+    - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
+    - docker push $IMAGE_NAME && docker image rm $IMAGE_NAME
+  only:
+    - master
   tags:
     - shell
 
