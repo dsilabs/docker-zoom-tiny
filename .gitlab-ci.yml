@@ -5,8 +5,29 @@ variables:
   IMAGE_NAME: dsilabs/zoom-tiny:latest
 
 stages:
+  - build
   - publish
   - downstream
+
+build image:
+  stage: build
+  script:
+    - docker info
+    - docker pull dsilabs/zoom:latest
+    - docker build --no-cache -t $IMAGE_NAME .
+  tags:
+    - shell
+
+build MySQL 8 image:
+  stage: build
+  variables:
+    IMAGE_NAME: dsilabs/zoom-tiny-mysql8:latest
+  script:
+    - docker info
+    - docker pull dsilabs/zoom:latest
+    - docker build --no-cache -f Dockerfile-MySQL8 -t $IMAGE_NAME .
+  tags:
+    - shell
 
 publish image:
   stage: publish
