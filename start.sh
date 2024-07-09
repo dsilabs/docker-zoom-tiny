@@ -1,7 +1,9 @@
 
 # start database
+echo "Starting database"
 service mysql start
 
+echo "Configuring database"
 # create database and site
 mysql -e "create database zoomdata"
 mysql -e "create user zoomuser identified by 'zoompass'"
