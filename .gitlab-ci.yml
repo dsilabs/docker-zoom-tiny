@@ -34,12 +34,12 @@ push images:
   #   - master
   script:
     - docker info
-    - docker build --no-cache --build-arg BASE_TAG=3.7-latest -t ${TAG_VERSION_PREFIX}:3.7 .
-    - docker build --no-cache --build-arg BASE_TAG=3.9-latest -t ${TAG_VERSION_PREFIX}:3.9 .
+    - docker build --no-cache --build-arg BASE_TAG=3.7-latest -t ${TAG_VERSION_PREFIX}:3.7-latest .
+    - docker build --no-cache --build-arg BASE_TAG=3.9-latest -t ${TAG_VERSION_PREFIX}:3.9-latest .
     - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
-    - docker push ${TAG_VERSION_PREFIX}:3.7
-    - docker push ${TAG_VERSION_PREFIX}:3.9
-    - docker tag ${TAG_VERSION_PREFIX}:3.9 ${TAG_VERSION_PREFIX}:latest
+    - docker push ${TAG_VERSION_PREFIX}:3.7-latest
+    - docker push ${TAG_VERSION_PREFIX}:3.9-latest
+    - docker tag ${TAG_VERSION_PREFIX}:3.7-latest ${TAG_VERSION_PREFIX}:latest
     - docker push ${TAG_VERSION_PREFIX}:latest
   tags:
     - shell
