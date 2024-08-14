@@ -2,7 +2,7 @@
 # Dockerfile standalone Zoom instance with MySQL 8 database
 #
 
-FROM dsilabs/zoom:3.9-latest
+FROM dsilabs/zoom:3.12-latest
 
 RUN apt-get update
 WORKDIR /work
