@@ -32,11 +32,20 @@ build 3.9:
 build 3.9 mysql8:
   stage: build
   variables:
-    BASE_TAG_NAME: 3.9-latest
     TAG_NAME: 3.9-mysql8-latest
   script:
-    - docker pull dsilabs/zoom:${BASE_TAG_NAME}
-    - docker build --no-cache -f Dockerfile-MySQL8 --build-arg BASE_TAG=${TAG_NAME} -t ${IMAGE_PREFIX}:${TAG_NAME} .
+    - docker pull dsilabs/zoom:3.9-latest
+    - docker build --no-cache -f Dockerfile-MySQL8 -t ${IMAGE_PREFIX}:${TAG_NAME} .
+  tags:
+    - shell
+
+build 3.12:
+  stage: build
+  variables:
+    TAG_NAME: 3.12-latest
+  script:
+    - docker pull dsilabs/zoom:${TAG_NAME}
+    - docker build --no-cache --build-arg BASE_TAG=${TAG_NAME} -t ${IMAGE_PREFIX}:${TAG_NAME} .
   tags:
     - shell
 
