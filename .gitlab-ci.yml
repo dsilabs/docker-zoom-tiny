@@ -58,9 +58,9 @@ publish 3.7:
     - docker build --no-cache --build-arg BASE_TAG=${TAG_NAME} -t ${IMAGE_PREFIX}:${TAG_NAME} .
     - docker push ${IMAGE_PREFIX}:${TAG_NAME}
     - docker tag ${IMAGE_PREFIX}:${TAG_NAME} ${IMAGE_PREFIX}:latest
-    # - docker push ${IMAGE_PREFIX}:latest
-  # only:
-  #   - master
+    - docker push ${IMAGE_PREFIX}:latest
+  only:
+    - master
   tags:
     - shell
 
@@ -71,9 +71,9 @@ publish 3.9:
   script:
     - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
     - docker build --no-cache --build-arg BASE_TAG=${TAG_NAME} -t ${IMAGE_PREFIX}:${TAG_NAME} .
-    # - docker push ${IMAGE_PREFIX}:${TAG_NAME}
-  # only:
-  #   - master
+    - docker push ${IMAGE_PREFIX}:${TAG_NAME}
+  only:
+    - master
   tags:
     - shell
 
@@ -84,9 +84,9 @@ publish 3.12:
   script:
     - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
     - docker build --no-cache --build-arg BASE_TAG=${TAG_NAME} -t ${IMAGE_PREFIX}:${TAG_NAME} .
-    # - docker push ${IMAGE_PREFIX}:${TAG_NAME}
-  # only:
-  #   - master
+    - docker push ${IMAGE_PREFIX}:${TAG_NAME}
+  only:
+    - master
   tags:
     - shell
 
@@ -97,9 +97,9 @@ publish 3.12 mysql8:
   script:
     - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
     - docker build --no-cache -f Dockerfile-MySQL8 -t ${IMAGE_PREFIX}:${TAG_NAME} .
-    # - docker push ${IMAGE_PREFIX}:${TAG_NAME}
-  # only:
-  #   - master
+    - docker push ${IMAGE_PREFIX}:${TAG_NAME}
+  only:
+    - master
   tags:
     - shell
 
