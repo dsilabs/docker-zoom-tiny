@@ -1,56 +1,109 @@
+
 image: docker:stable
 
 variables:
-  TAG_VERSION_PREFIX: dsilabs/zoom-tiny
+  IMAGE_PREFIX: dsilabs/zoom-tiny
 
 stages:
   - build
-  - push
-  - downstream
+  # - publish
+  # - downstream
 
-build image 3.7:
+build 3.7:
   stage: build
+  variables:
+    TAG_NAME: 3.7-latest
   script:
-    - docker info
-    - docker build --no-cache --build-arg BASE_TAG=3.7-latest -t ${TAG_VERSION_PREFIX}:3.7 .
+    - docker pull dsilabs/zoom:${TAG_NAME}
+    - docker build --no-cache --build-arg BASE_TAG=${TAG_NAME} -t ${IMAGE_PREFIX}:${TAG_NAME} .
   tags:
     - shell
 
-build image 3.9:
+build 3.9:
   stage: build
+  variables:
+    TAG_NAME: 3.9-latest
   script:
-    - docker info
-    - docker build --no-cache --build-arg BASE_TAG=3.9-latest -t ${TAG_VERSION_PREFIX}:3.9 .
+    - docker pull dsilabs/zoom:${TAG_NAME}
+    - docker build --no-cache --build-arg BASE_TAG=${TAG_NAME} -t ${IMAGE_PREFIX}:${TAG_NAME} .
   tags:
     - shell
 
-push 3.7:
-  stage: push
-  only:
-    - master
+build 3.9 mysql8:
+  stage: build
+  variables:
+    BASE_TAG_NAME: 3.9-latest
+    TAG_NAME: 3.9-mysql8-latest
   script:
-    - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
-    - docker build --no-cache --build-arg BASE_TAG=3.7-latest -t ${TAG_VERSION_PREFIX}:3.7-latest .
-    - docker push ${TAG_VERSION_PREFIX}:3.7-latest
-    - docker tag ${TAG_VERSION_PREFIX}:3.7-latest ${TAG_VERSION_PREFIX}:latest
-    - docker push ${TAG_VERSION_PREFIX}:latest
+    - docker pull dsilabs/zoom:${BASE_TAG_NAME}
+    - docker build --no-cache -f Dockerfile-MySQL8 --build-arg BASE_TAG=${TAG_NAME} -t ${IMAGE_PREFIX}:${TAG_NAME} .
   tags:
     - shell
 
-push 3.9:
-  stage: push
-  only:
-    - master
-  script:
-    - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
-    - docker build --no-cache --build-arg BASE_TAG=3.9-latest -t ${TAG_VERSION_PREFIX}:3.9-latest .
-    - docker push ${TAG_VERSION_PREFIX}:3.9-latest
-  tags:
-    - shell
+# build 3.9 mysql8:
+#   stage: build
+#   script:
+#     - docker build --no-cache -f Dockerfile-MySQL8 --build-arg BASE_TAG=3.9-mysql8-latest -t ${IMAGE_PREFIX}:3.9-mysql8-latest .
+#   tags:
+#     - shell
 
-downstream:
-  stage: downstream
-  trigger:
-    project: dsilabs/zoom-cd
-  only:
-    - master
+# publish 3.7:
+#   stage: publish
+#   script:
+#     - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
+#     - docker build --no-cache --build-arg BASE_TAG=3.7-latest -t ${IMAGE_PREFIX}:3.7-latest .
+#     - docker push ${IMAGE_PREFIX}:3.7-latest
+#     - docker tag ${IMAGE_PREFIX}:3.7-latest ${IMAGE_PREFIX}:latest
+#     - docker push ${IMAGE_PREFIX}:latest
+#   only:
+#     - master
+#   tags:
+#     - shell
+
+# push 3.9:
+#   stage: publish
+#   variables:
+#     TAG_NAME: 3.9-latest
+#   script:
+#     - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
+#     - docker build --no-cache --build-arg BASE_TAG=3.9-latest -t ${IMAGE_PREFIX}:3.9-latest .
+#     - docker push ${IMAGE_PREFIX}:${TAG_NAME}
+#   only:
+#     - master
+#   tags:
+#     - shell
+
+# push 3.9:
+#   stage: publish
+#   variables:
+#     TAG_NAME: 3.9-mysql8-latest
+#   script:
+#     - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
+#     - docker build --no-cache -f Dockerfile-MySQL8 --build-arg BASE_TAG=3.9-mysql8-latest -t ${IMAGE_PREFIX}:3.9-mysql8-latest .
+#     - docker push ${IMAGE_PREFIX}:3.9-mysql8-latest
+#   only:
+#     - master
+#   tags:
+#     - shell
+
+# publish MySQL 8 image:
+#   stage: publish
+#   variables:
+#     IMAGE_NAME: dsilabs/zoom-tiny-mysql8:latest
+#   script:
+#     - docker info
+#     - docker pull dsilabs/zoom:latest
+#     - docker build --no-cache -f Dockerfile-MySQL8 -t $IMAGE_NAME .
+#     - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
+#     - docker push $IMAGE_NAME && docker image rm $IMAGE_NAME
+#   only:
+#     - master
+#   tags:
+#     - shell
+
+# downstream:
+#   stage: downstream
+#   trigger:
+#     project: dsilabs/zoom-cd
+#   only:
+#     - master
