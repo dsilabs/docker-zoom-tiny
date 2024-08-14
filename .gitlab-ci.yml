@@ -6,7 +6,7 @@ variables:
 
 stages:
   - build
-  # - publish
+  - publish
   # - downstream
 
 build 3.7:
@@ -29,16 +29,6 @@ build 3.9:
   tags:
     - shell
 
-build 3.12 mysql8:
-  stage: build
-  variables:
-    TAG_NAME: 3.12-mysql8-latest
-  script:
-    - docker pull dsilabs/zoom:3.12-latest
-    - docker build --no-cache -f Dockerfile-MySQL8 -t ${IMAGE_PREFIX}:${TAG_NAME} .
-  tags:
-    - shell
-
 build 3.12:
   stage: build
   variables:
@@ -49,66 +39,69 @@ build 3.12:
   tags:
     - shell
 
-# build 3.9 mysql8:
-#   stage: build
-#   script:
-#     - docker build --no-cache -f Dockerfile-MySQL8 --build-arg BASE_TAG=3.9-mysql8-latest -t ${IMAGE_PREFIX}:3.9-mysql8-latest .
-#   tags:
-#     - shell
+build 3.12 mysql8:
+  stage: build
+  variables:
+    TAG_NAME: 3.12-mysql8-latest
+  script:
+    - docker pull dsilabs/zoom:3.12-latest
+    - docker build --no-cache -f Dockerfile-MySQL8 -t ${IMAGE_PREFIX}:${TAG_NAME} .
+  tags:
+    - shell
 
-# publish 3.7:
-#   stage: publish
-#   script:
-#     - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
-#     - docker build --no-cache --build-arg BASE_TAG=3.7-latest -t ${IMAGE_PREFIX}:3.7-latest .
-#     - docker push ${IMAGE_PREFIX}:3.7-latest
-#     - docker tag ${IMAGE_PREFIX}:3.7-latest ${IMAGE_PREFIX}:latest
-#     - docker push ${IMAGE_PREFIX}:latest
-#   only:
-#     - master
-#   tags:
-#     - shell
+publish 3.7:
+  stage: publish
+  variables:
+    TAG_NAME: 3.7-latest
+  script:
+    - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
+    - docker build --no-cache --build-arg BASE_TAG=${TAG_NAME} -t ${IMAGE_PREFIX}:${TAG_NAME} .
+    - docker push ${IMAGE_PREFIX}:${TAG_NAME}
+    - docker tag ${IMAGE_PREFIX}:${TAG_NAME} ${IMAGE_PREFIX}:latest
+    # - docker push ${IMAGE_PREFIX}:latest
+  only:
+    - master
+  tags:
+    - shell
 
-# push 3.9:
-#   stage: publish
-#   variables:
-#     TAG_NAME: 3.9-latest
-#   script:
-#     - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
-#     - docker build --no-cache --build-arg BASE_TAG=3.9-latest -t ${IMAGE_PREFIX}:3.9-latest .
-#     - docker push ${IMAGE_PREFIX}:${TAG_NAME}
-#   only:
-#     - master
-#   tags:
-#     - shell
+publish 3.9:
+  stage: publish
+  variables:
+    TAG_NAME: 3.9-latest
+  script:
+    - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
+    - docker build --no-cache --build-arg BASE_TAG=${TAG_NAME} -t ${IMAGE_PREFIX}:${TAG_NAME} .
+    # - docker push ${IMAGE_PREFIX}:${TAG_NAME}
+  only:
+    - master
+  tags:
+    - shell
 
-# push 3.9:
-#   stage: publish
-#   variables:
-#     TAG_NAME: 3.9-mysql8-latest
-#   script:
-#     - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
-#     - docker build --no-cache -f Dockerfile-MySQL8 --build-arg BASE_TAG=3.9-mysql8-latest -t ${IMAGE_PREFIX}:3.9-mysql8-latest .
-#     - docker push ${IMAGE_PREFIX}:3.9-mysql8-latest
-#   only:
-#     - master
-#   tags:
-#     - shell
+publish 3.12:
+  stage: publish
+  variables:
+    TAG_NAME: 3.12-latest
+  script:
+    - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
+    - docker build --no-cache --build-arg BASE_TAG=${TAG_NAME} -t ${IMAGE_PREFIX}:${TAG_NAME} .
+    # - docker push ${IMAGE_PREFIX}:${TAG_NAME}
+  only:
+    - master
+  tags:
+    - shell
 
-# publish MySQL 8 image:
-#   stage: publish
-#   variables:
-#     IMAGE_NAME: dsilabs/zoom-tiny-mysql8:latest
-#   script:
-#     - docker info
-#     - docker pull dsilabs/zoom:latest
-#     - docker build --no-cache -f Dockerfile-MySQL8 -t $IMAGE_NAME .
-#     - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
-#     - docker push $IMAGE_NAME && docker image rm $IMAGE_NAME
-#   only:
-#     - master
-#   tags:
-#     - shell
+publish 3.12 mysql8:
+  stage: publish
+  variables:
+    TAG_NAME: 3.12-mysql8-latest
+  script:
+    - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
+    - docker build --no-cache -f Dockerfile-MySQL8 -t ${IMAGE_PREFIX}:${TAG_NAME} .
+    # - docker push ${IMAGE_PREFIX}:${TAG_NAME}
+  only:
+    - master
+  tags:
+    - shell
 
 # downstream:
 #   stage: downstream
