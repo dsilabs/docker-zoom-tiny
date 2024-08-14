@@ -29,7 +29,7 @@ build 3.9:
   tags:
     - shell
 
-build 3.9 mysql8:
+build 3.12 mysql8:
   stage: build
   variables:
     TAG_NAME: 3.12-mysql8-latest
