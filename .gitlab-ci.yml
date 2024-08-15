@@ -7,7 +7,7 @@ variables:
 stages:
   - build
   - publish
-  # - downstream
+  - downstream
 
 build 3.7:
   stage: build
