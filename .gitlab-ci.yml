@@ -103,9 +103,9 @@ publish 3.12 mysql8:
   tags:
     - shell
 
-# downstream:
-#   stage: downstream
-#   trigger:
-#     project: dsilabs/zoom-cd
-#   only:
-#     - master
+downstream:
+  stage: downstream
+  trigger:
+    project: dsilabs/zoom-cd
+  only:
+    - master
